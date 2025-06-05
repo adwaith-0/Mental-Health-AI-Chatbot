@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulAI | Premium Mental Health Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background for premium feel -->
+    <div class="animated-bg"></div>
+    <div class="app-container glass-effect">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-blur">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-brain pulse"></i>
+                    <span>MindfulAI</span>
+                </div>
+                <button class="mobile-close" id="mobile-close">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <button class="new-chat-btn" id="new-chat-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New Conversation</span>
+                </button>
+                
+                <div class="conversation-history">
+                    <h3>Recent Conversations</h3>
+                    <ul id="history-list">
+                        <li class="history-item active">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <span>Current Session</span>
+                        </li>
+                        <li class="history-item">
+                            <i class="fa-solid fa-comment"></i>
+                            <span>Anxiety Management</span>
+                        </li>
+                        <li class="history-item">
+                            <i class="fa-solid fa-comment"></i>
+                            <span>Sleep Improvement</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="resources-btn" id="resources-btn">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    <span>Crisis Resources</span>
+                </button>
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <span>Guest User</span>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1 class="chat-title">Mental Health Support</h1>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </header>
+            
+            <div class="chat-container" id="chat-container">
+                <div class="welcome-screen" id="welcome-screen">
+                    <div class="welcome-icon pulse-slow">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h2>Welcome to MindfulAI</h2>
+                    <p>Your compassionate mental health support companion</p>
+                    <div class="suggestion-chips">
+                        <button class="suggestion-chip" data-message="I've been feeling anxious lately">I've been feeling anxious lately</button>
+                        <button class="suggestion-chip" data-message="I'm having trouble sleeping">I'm having trouble sleeping</button>
+                        <button class="suggestion-chip" data-message="I need some coping strategies">I need some coping strategies</button>
+                        <button class="suggestion-chip" data-message="I'm feeling overwhelmed">I'm feeling overwhelmed</button>
+                    </div>
+                </div>
+                
+                <div class="messages-container" id="messages-container">
+                    <!-- Messages will be added here by JavaScript -->
+                </div>
+                
+                <div class="typing-indicator" id="typing-indicator">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            
+            <div class="input-container">
+                <form id="message-form" class="message-form">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="message-input" 
+                            class="message-input" 
+                            placeholder="Type your message here..." 
+                            rows="1"
+                            autofocus
+                        ></textarea>
+                        <button type="button" class="voice-input-btn" title="Voice input">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="send-btn" id="send-btn" disabled>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+                <p class="disclaimer">
+                    This is an AI assistant for emotional support only. Not a replacement for professional mental health services.
+                </p>
+            </div>
+        </main>
+        
+        <!-- Resources Panel -->
+        <aside class="resources-panel" id="resources-panel">
+            <div class="resources-header">
+                <h2>Crisis Resources</h2>
+                <button class="close-resources" id="close-resources">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="resources-content">
+                <div class="resource-section">
+                    <h3>Emergency Numbers</h3>
+                    <div class="resource-item">
+                        <span class="resource-name">Global Emergency:</span>
+                        <span class="resource-value">911 or local emergency number</span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-name">US Crisis Line:</span>
+                        <span class="resource-value">988 Suicide & Crisis Lifeline</span>
+                    </div>
+                    <div class="resource-item">
+                        <a href="https://findahelpline.com/i/iasp" target="_blank" class="resource-link">
+                            Find a Helpline <i class="fa-solid fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-section">
+                    <h3>Text Support</h3>
+                    <div class="resource-item">
+                        <span class="resource-value">Text HOME to 741741 to reach Crisis Text Line</span>
+                    </div>
+                </div>
+                
+                <div class="resource-section">
+                    <h3>Helpful Websites</h3>
+                    <div class="resource-item">
+                        <a href="https://www.nami.org" target="_blank" class="resource-link">
+                            National Alliance on Mental Illness <i class="fa-solid fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="resource-item">
+                        <a href="https://www.mhanational.org" target="_blank" class="resource-link">
+                            Mental Health America <i class="fa-solid fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="resource-item">
+                        <a href="https://www.7cups.com" target="_blank" class="resource-link">
+                            7 Cups - Online Therapy & Free Counseling <i class="fa-solid fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-alert">
+                    <i class="fa-solid fa-exclamation-triangle"></i>
+                    <p>If you're experiencing a mental health emergency, please contact emergency services immediately.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
