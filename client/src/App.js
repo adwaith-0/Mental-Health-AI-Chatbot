@@ -78,12 +78,12 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <AppContainer>
       <Header />
       
-      <main className="main-content">
-        <div className="chat-container">
-          <div className="messages-container">
+      <MainContent>
+        <ChatContainer showResources={showResources}>
+          <MessagesContainer>
             {messages.map(message => (
               <ChatMessage 
                 key={message.id} 
@@ -92,24 +92,24 @@ function App() {
               />
             ))}
             {isLoading && (
-              <div className="typing-indicator glass">
+              <TypingIndicator className="glass">
                 <div className="typing-dots">
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
                 <span className="shimmer">Thinking...</span>
-              </div>
+              </TypingIndicator>
             )}
             <div ref={messagesEndRef} />
-          </div>
+          </MessagesContainer>
           
           <ChatInput onSendMessage={sendMessage} isLoading={isLoading} />
-        </div>
+        </ChatContainer>
         
         <ResourcesPanel isOpen={showResources} onClose={toggleResourcesPanel} />
-      </main>
-    </div>
+      </MainContent>
+    </AppContainer>
   );
 }
 
@@ -117,25 +117,32 @@ function App() {
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: white;
-  box-shadow: var(--box-shadow);
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5;
+  position: relative;
 `;
 
-const MainContent = styled.div`
+const MainContent = styled.main`
   display: flex;
   flex: 1;
   overflow: hidden;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: ${props => props.showResources ? '70%' : '100%'};
-  height: 100%;
-  transition: flex 0.3s ease;
+  flex: ${props => props.showResources ? '0 0 70%' : '1'};
+  height: calc(100vh - 60px); // Subtract header height
+  transition: all 0.3s ease;
+  background-color: white;
+  position: relative;
 `;
 
 const MessagesContainer = styled.div`
@@ -145,16 +152,72 @@ const MessagesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background-color: #f8f9fa;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 const TypingIndicator = styled.div`
   align-self: flex-start;
   background-color: #f1f1f1;
-  padding: 8px 16px;
+  padding: 12px 20px;
   border-radius: 18px;
-  margin-top: 5px;
+  margin: 8px 0;
   font-size: 14px;
   color: #555;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+    
+    span {
+      width: 6px;
+      height: 6px;
+      background-color: #888;
+      border-radius: 50%;
+      animation: typing 1s infinite ease-in-out;
+      
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.4s; }
+    }
+  }
+  
+  .shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  @keyframes typing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 `;
 
 export default App;

@@ -14,7 +14,7 @@ const OpenAI = require('openai');
 const axios = require('axios');
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -38,7 +38,7 @@ app.post('/api/chat', async (req, res) => {
     
     // Format the chat history for the OpenAI API
     const formattedHistory = chatHistory.map(msg => ({
-      role: msg.sender === 'user' ? 'user' : 'support',
+      role: msg.sender === 'user' ? 'user' : 'assistant',
       content: msg.text
     }));
     
@@ -73,11 +73,17 @@ app.post('/api/chat', async (req, res) => {
     if (useGroq && groqApiKey) {
       // Use Groq API
       try {
+        const messages = [
+          systemMessage,
+          ...formattedHistory,
+          { role: 'user', content: message }
+        ].filter(msg => msg.role && msg.content);
+
         const groqRes = await axios.post(
           groqUrl,
           {
             model: groqModel,
-            messages: [systemMessage, ...formattedHistory, { role: 'user', content: message }],
+            messages: messages,
             max_tokens: 500,
             temperature: 0.7
           },
@@ -91,7 +97,19 @@ app.post('/api/chat', async (req, res) => {
         responseText = groqRes.data.choices[0].message.content;
       } catch (groqError) {
         console.error('Groq API error:', groqError?.response?.data || groqError.message);
-        return res.status(500).json({ success: false, error: 'Error from support service.' });
+        // Fallback to OpenAI if Groq fails
+        try {
+          const completion = await openai.chat.completions.create({
+            model: 'gpt-3.5-turbo',
+            messages: [systemMessage, ...formattedHistory, { role: 'user', content: message }],
+            max_tokens: 500,
+            temperature: 0.7,
+          });
+          responseText = completion.choices[0].message.content;
+        } catch (openaiError) {
+          console.error('OpenAI fallback error:', openaiError);
+          return res.status(500).json({ success: false, error: 'Error from support service.' });
+        }
       }
     } else {
       // Use OpenAI API
